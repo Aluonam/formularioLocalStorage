@@ -19,6 +19,17 @@ const Formulario = () => {
     }
 
 
+    // Función: si se hace check, guarda el valor sino guarda "no tengo hambre"
+    const handleTengoHambre = (e)=>{
+        if(e.target.checked){
+             setFormularioPau({...formularioPau,tieneHambre:e.target.value})
+        } else{
+             setFormularioPau({...formularioPau,tieneHambre:"No tengo hambre"})
+        }
+ 
+     }
+
+
   return (
     <div>
         {/* INPUT TIPO TEXTO (especifico type texto) */}
@@ -32,7 +43,9 @@ const Formulario = () => {
         {/* INPUT TIPO CHECKBOX */}
         {/* hay que especificar el tipo y también al guardar el valor: e.target.checked */}
         <input type="checkbox" id="identificador" name="nombre" onChange={(e)=>setFormularioPau({...formularioPau,tieneHambre:e.target.checked})}/>Tiene hambre
-
+        <br></br>
+        <input type="checkbox" id="identificador" name="nombre" value="Tengo hambre" onChange={(e)=>handleTengoHambre(e)}/>Tiene hambre
+        <br></br>
 
         <br></br>
         <button onClick={()=>setFormularioPau({})}>RESET</button>
