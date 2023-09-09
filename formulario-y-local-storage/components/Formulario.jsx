@@ -62,6 +62,25 @@ const Formulario = () => {
         </select>
         <br></br>
 
+        {/* SELECT DE GRUPOS */}
+        <select name="ciudad" onChange={(e)=>setFormularioPau({...formularioPau,ciudad:e.target.value})}>
+          <optgroup label="Europa">
+            <option>Madrid</option>
+            <option>Londres</option>
+            <option>Paris</option>
+          </optgroup>
+          <optgroup label="Suramerica">
+            <option>Santiago</option>
+            <option>Sao Paulo</option>
+            <option>Lima</option>
+            <option>Bogota</option>
+          </optgroup>
+            <optgroup label="Africa">
+            <option>Casablanca</option>
+            <option>Ciudad del Cabo</option>
+          </optgroup>
+        </select>
+
         <br></br>
         {/* BOTÓN BORRAR: deja el modificador como objeto vacio */}
         <button onClick={()=>setFormularioPau({})}>RESET</button>
