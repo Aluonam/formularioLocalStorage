@@ -35,10 +35,12 @@ const Formulario = () => {
         {/* INPUT TIPO TEXTO (especifico type texto) */}
         {/* en el onChange donde se incluye dentro del set lo que hay ya en el formulario con el operador spread y además la clave y nuevo valor que se incluye */}
         {/* además, si quiero que desaparezca el valor una vez haya sido enviado: debo especificar el nombre de la variable donde lo he guardado y la clave (es la forma de acceder al objeto) */}
+        Escribe tu nombre de usuario: 
         <input type="text" id='nombre_usuario' onChange={(e)=>setFormularioPau({...formularioPau,username:e.target.value})} value={formularioPau.username ?? ""}/>
         <br></br>
 
         {/* INPUT TIPO CONTRASEÑA (especifico type password) */}
+        Escribe tu contraseña: 
         <input type="password" id="password" onChange={(e)=>setFormularioPau({...formularioPau,password:e.target.value})} />
         <br></br>
 

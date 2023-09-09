@@ -1,38 +1,125 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+**FORMULARIO con botón enviar y borrar y guardando en LocalStorage**
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+1. Crear useState para guardar datos del formulario. 
+IMPORTANTE: que tenga un objeto vacio por defecto! 
+```javascript
+ const [formularioPau, setFormularioPau] = useState({})
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Crear botón enviar. 
+Pasando los datos a JSON con JSON.stringify(nombreVariableUseState)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```javascript
+const handleEnviarForm = () => {
+        localStorage.setItem("formularioPau", JSON.stringify(formularioPau));
+    }
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+//En el return:
+<button onClick={()=>handleEnviarForm()}>ENVIAR</button>
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+3. Crear botón borrar se iguala a objeto vacio.
+```javascript
+<button onClick={()=>setFormularioPau({})}>RESET</button>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. Hacer los input o select necesarios especificando el tipo y guardando el valor en el set con la clave valor y cogiendo lo que ya hay guardado en el formulario con el operador spread.
 
-## Learn More
+```javascript
+import React, { useEffect, useState } from 'react'
 
-To learn more about Next.js, take a look at the following resources:
+const Formulario = () => {
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    // useEffect para guardar los datos en local con .getItem
+    useEffect(() => {
+        const datosLocal = localStorage.getItem("formularioPau")
+        // console.log(datosLocal)
+        console.log(JSON.parse(datosLocal))
+        // Tengo que modificarlo para que no lo reciba en formato JSON 
+    }, [])
+    
+    // Crear useState para guardar los datos del formulario. Además debe ser un objeto vacio de forma predeterminada.
+    const [formularioPau, setFormularioPau] = useState({})
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    // Función para enviar el formulario con el boton enviar. Los datos deben pasarse en a JSON 
+    const handleEnviarForm = () => {
+        localStorage.setItem("formularioPau", JSON.stringify(formularioPau));
+    }
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    // Función: si se hace check, guarda el valor sino guarda "no tengo hambre"
+    const handleTengoHambre = (e)=>{
+        if(e.target.checked){
+             setFormularioPau({...formularioPau,tieneHambre:e.target.value})
+        } else{
+             setFormularioPau({...formularioPau,tieneHambre:"No tengo hambre"})
+        }
+ 
+     }
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+  return (
+    <div>
+        {/* INPUT TIPO TEXTO (especifico type texto) */}
+        {/* en el onChange donde se incluye dentro del set lo que hay ya en el formulario con el operador spread y además la clave y nuevo valor que se incluye */}
+        {/* además, si quiero que desaparezca el valor una vez haya sido enviado: debo especificar el nombre de la variable donde lo he guardado y la clave (es la forma de acceder al objeto) */}
+        Escribe tu nombre de usuario: 
+        <input type="text" id='nombre_usuario' onChange={(e)=>setFormularioPau({...formularioPau,username:e.target.value})} value={formularioPau.username ?? ""}/>
+        <br></br>
+
+        {/* INPUT TIPO CONTRASEÑA (especifico type password) */}
+        Escribe tu contraseña: 
+        <input type="password" id="password" onChange={(e)=>setFormularioPau({...formularioPau,password:e.target.value})} />
+        <br></br>
+
+        {/* INPUT TIPO CHECKBOX */}
+        {/* hay que especificar el tipo y también al guardar el valor: e.target.checked */}
+        <input type="checkbox" id="identificador" name="nombre" onChange={(e)=>setFormularioPau({...formularioPau,tieneHambre:e.target.checked})}/>Tiene hambre
+        <br></br>
+
+        {/* INPUT TIPO CHECKBOX CON FUNCIÓN PARA GUARDAR UN VALOR U OTRO, si se hace check o no */}
+        <input type="checkbox" id="identificador" name="nombre" value="Tengo hambre" onChange={(e)=>handleTengoHambre(e)}/>Tiene hambre
+        <br></br>
+
+        {/* SELECT CON OPCIONES */}
+        {/* se guarda como value y la opcion preseleccionada se pone como selected */}
+        <select onChange={(e)=>setFormularioPau({...formularioPau,equipo:e.target.value})}>
+          <option>Atlético de Madrid</option>
+          <option>Real Betis</option>
+          <option>FC. Barcelona</option>
+          <option selected="selected">Real Madrid</option> 
+          <option>Zaragoza</option>
+        </select>
+        <br></br>
+
+        {/* SELECT DE GRUPOS */}
+        <select name="ciudad" onChange={(e)=>setFormularioPau({...formularioPau,ciudad:e.target.value})}>
+          <optgroup label="Europa">
+            <option>Madrid</option>
+            <option>Londres</option>
+            <option>Paris</option>
+          </optgroup>
+          <optgroup label="Suramerica">
+            <option>Santiago</option>
+            <option>Sao Paulo</option>
+            <option>Lima</option>
+            <option>Bogota</option>
+          </optgroup>
+            <optgroup label="Africa">
+            <option>Casablanca</option>
+            <option>Ciudad del Cabo</option>
+          </optgroup>
+        </select>
+
+        <br></br>
+        {/* BOTÓN BORRAR: deja el modificador como objeto vacio */}
+        <button onClick={()=>setFormularioPau({})}>RESET</button>
+        <br></br>
+        {/* BOTÓN ENVIAR: función que especifica clave y valor. El valor se pasa a JSON JSON.stringify(formularioPau) con los datos de la variable del useState */}
+        <button onClick={()=>handleEnviarForm()}>ENVIAR</button>
+    </div>
+  )
+}
+
+export default Formulario
+```
