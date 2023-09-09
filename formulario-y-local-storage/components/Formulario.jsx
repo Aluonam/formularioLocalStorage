@@ -37,19 +37,36 @@ const Formulario = () => {
         {/* además, si quiero que desaparezca el valor una vez haya sido enviado: debo especificar el nombre de la variable donde lo he guardado y la clave (es la forma de acceder al objeto) */}
         <input type="text" id='nombre_usuario' onChange={(e)=>setFormularioPau({...formularioPau,username:e.target.value})} value={formularioPau.username ?? ""}/>
         <br></br>
+
         {/* INPUT TIPO CONTRASEÑA (especifico type password) */}
         <input type="password" id="password" onChange={(e)=>setFormularioPau({...formularioPau,password:e.target.value})} />
         <br></br>
+
         {/* INPUT TIPO CHECKBOX */}
         {/* hay que especificar el tipo y también al guardar el valor: e.target.checked */}
         <input type="checkbox" id="identificador" name="nombre" onChange={(e)=>setFormularioPau({...formularioPau,tieneHambre:e.target.checked})}/>Tiene hambre
         <br></br>
+
+        {/* INPUT TIPO CHECKBOX CON FUNCIÓN PARA GUARDAR UN VALOR U OTRO, si se hace check o no */}
         <input type="checkbox" id="identificador" name="nombre" value="Tengo hambre" onChange={(e)=>handleTengoHambre(e)}/>Tiene hambre
         <br></br>
 
+        {/* SELECT CON OPCIONES */}
+        {/* se guarda como value y la opcion preseleccionada se pone como selected */}
+        <select onChange={(e)=>setFormularioPau({...formularioPau,equipo:e.target.value})}>
+          <option>Atlético de Madrid</option>
+          <option>Real Betis</option>
+          <option>FC. Barcelona</option>
+          <option selected="selected">Real Madrid</option> 
+          <option>Zaragoza</option>
+        </select>
         <br></br>
+
+        <br></br>
+        {/* BOTÓN BORRAR: deja el modificador como objeto vacio */}
         <button onClick={()=>setFormularioPau({})}>RESET</button>
         <br></br>
+        {/* BOTÓN ENVIAR: función que especifica clave y valor. El valor se pasa a JSON JSON.stringify(formularioPau) con los datos de la variable del useState */}
         <button onClick={()=>handleEnviarForm()}>ENVIAR</button>
     </div>
   )
