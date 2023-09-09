@@ -29,9 +29,14 @@ const Formulario = () => {
         {/* INPUT TIPO CONTRASEÑA (especifico type password) */}
         <input type="password" id="password" onChange={(e)=>setFormularioPau({...formularioPau,password:e.target.value})} />
         <br></br>
+        {/* INPUT TIPO CHECKBOX */}
+        {/* hay que especificar el tipo y también al guardar el valor: e.target.checked */}
+        <input type="checkbox" id="identificador" name="nombre" onChange={(e)=>setFormularioPau({...formularioPau,tieneHambre:e.target.checked})}/>Tiene hambre
 
 
+        <br></br>
         <button onClick={()=>setFormularioPau({})}>RESET</button>
+        <br></br>
         <button onClick={()=>handleEnviarForm()}>ENVIAR</button>
     </div>
   )
